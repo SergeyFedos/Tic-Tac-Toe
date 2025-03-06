@@ -1,1 +1,1 @@
-The Odin projec Tic Tac Toe game
+The Odin Project Tic Tac Toe game
