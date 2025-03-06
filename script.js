@@ -11,23 +11,19 @@ const gameboard = (() => {
     const squares = document.querySelectorAll('.square').forEach((square) => {
       square.addEventListener('click', game.handleClick)
     })
-    
   }
   const update = (index, marker) => {
-    
-    
     gameBoard[index] = marker;
     gameboard.render();
-    
-   
   }
   const getGameboard = () => gameBoard;
-  
 
+  
 return {
   render,
   update,
-  getGameboard
+  getGameboard,
+  
 }
 
 })();
@@ -36,12 +32,15 @@ const game = (() => {
   let gameOver;
   let currentPlayerIndex;
   const players = [{
-    name: document.querySelector('.player1-name').value,
+    name: '',
     marker: 'X'
-  }, { name: document.querySelector('.player2-name').value,
+  }, { name: '',
        marker: 'O'
   }];
   const start = () => {
+    players[0].name = document.querySelector('.player1-name').value;
+    players[1].name = document.querySelector('.player2-name').value;
+    
     gameOver = false;
     currentPlayerIndex = 0;
   gameboard.render();
@@ -58,17 +57,20 @@ const handleClick = (event) => {
   
   gameboard.update(targ, players[currentPlayerIndex].marker)
  
-  
    currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0
    if ( checkForWin(gameboard.getGameboard())) {
-    const message = document.querySelector('.message').innerHTML = `${players[currentPlayerIndex].name} won!`
+    
+    displayMessage(players[currentPlayerIndex].name);
     return;
   } else if (game.checkForTie()) {
-    alert('tie!')
+    displayMessage('Tie')
+    return;
 
   }
 }
 const restart = () => {
+  displayMessage();
+  gameOver = false;
   gameboard.getGameboard().forEach((square, index, arr) => {
     arr[index] = '';
   })
@@ -89,12 +91,13 @@ const restart = () => {
     for (let i = 0; i < winCombos.length; i++) {
       const [a, b, c] = winCombos[i];
       if (arr[a] && arr[a] === arr[b] && arr[a] === arr[c]) {
+        [a, b, c].forEach((index ) => {
+          document.querySelectorAll('.square')[index].style.backgroundColor = "blue"
+        })
         gameOver = true;
-        
         return true;
       }
     }
-   
     return false;
   }
   const checkForTie = () => {
@@ -104,6 +107,16 @@ const restart = () => {
     gameOver = true;
      return true;
     }
+    const displayMessage = (value='') => {
+      const message = document.querySelector('.message')
+      if (value === players[currentPlayerIndex].name) {
+      message.innerHTML = `${value} won the game!`
+      } else if (value === 'Tie') {
+        message.innerHTML = "It's Tie!";
+      } else {
+        message.innerHTML = ''
+      }
+    }
    
 
 return {
@@ -112,19 +125,11 @@ return {
   restart,
   checkForWin,
   checkForTie,
-  gameOver
+  gameOver,
  
 }
 
 })();
-
-
-
-
-
-
-
-
 
 
 const restartBtn = document.querySelector('.reset-game');
