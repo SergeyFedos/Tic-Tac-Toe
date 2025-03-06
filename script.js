@@ -18,12 +18,10 @@ const gameboard = (() => {
   }
   const getGameboard = () => gameBoard;
 
-  
 return {
   render,
   update,
-  getGameboard,
-  
+  getGameboard
 }
 
 })();
@@ -38,6 +36,7 @@ const game = (() => {
        marker: 'O'
   }];
   const start = () => {
+    
     players[0].name = document.querySelector('.player1-name').value;
     players[1].name = document.querySelector('.player2-name').value;
     
@@ -47,6 +46,7 @@ const game = (() => {
   const squares = document.querySelectorAll('.square').forEach((square) => {
     square.addEventListener('click', handleClick)
   })
+  
 }
 const handleClick = (event) => {
   if (gameOver) return;
@@ -69,12 +69,17 @@ const handleClick = (event) => {
   }
 }
 const restart = () => {
-  displayMessage();
+  players[0].name = '';
+  players[1].name = '';
+  document.querySelectorAll('input').forEach((input) => input.value = '')
+  displayMessage('reset');
   gameOver = false;
   gameboard.getGameboard().forEach((square, index, arr) => {
     arr[index] = '';
   })
-    gameboard.render();
+  start();
+    
+    
   }
   function checkForWin(arr) {
     
@@ -92,7 +97,7 @@ const restart = () => {
       const [a, b, c] = winCombos[i];
       if (arr[a] && arr[a] === arr[b] && arr[a] === arr[c]) {
         [a, b, c].forEach((index ) => {
-          document.querySelectorAll('.square')[index].style.backgroundColor = "blue"
+          document.querySelectorAll('.square')[index].style.border = "5px solid red"
         })
         gameOver = true;
         return true;
@@ -107,13 +112,13 @@ const restart = () => {
     gameOver = true;
      return true;
     }
-    const displayMessage = (value='') => {
+    const displayMessage = (value) => {
       const message = document.querySelector('.message')
       if (value === players[currentPlayerIndex].name) {
       message.innerHTML = `${value} won the game!`
       } else if (value === 'Tie') {
         message.innerHTML = "It's Tie!";
-      } else {
+      } else  if (value === 'reset'){
         message.innerHTML = ''
       }
     }

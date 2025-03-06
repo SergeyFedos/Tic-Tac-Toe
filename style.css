@@ -1,11 +1,114 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #485563, #29323c);
+  
+}
+
+
 .square {
-  width: 100px;
-  height: 100px;
-  border: 2px solid black;
+  width: 100%;
+  border: 2px solid white;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ color: white;
+ 
+ 
+
 
 }
 .gameboard {
   display: grid;
-  grid-template-columns:  100px 100px 100px;
+  min-width: 300px;
+  width: 30%;
+  height: 60vh;
+  grid-template-columns: repeat(3, minmax(100px, 1fr));
+  grid-template-rows: repeat(3, minmax(100px, 1fr));
+  margin: 50px auto 5px auto; 
   font-size: 50px;
+  font-family: "Permanent Marker", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 70px;
+  
+  
+}
+input {
+  display: block;
+  padding: 10px;
+  border: 2px solid white;
+  margin: 5px auto 5px auto;
+  width: 90%;
+  border-radius: 10px;
+  color: white;
+  outline: none;
+  
+  
+}
+.controls {
+  width: 30%;
+  margin: 5px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 2px solid white;
+  padding: 10px;
+  border-radius: 10px;
+  /* outline: 1px solid rgba(255, 255, 255, 0.2) */
+  
+}
+svg {
+  width: 35px;
+  height: 35px;
+  fill: white;
+}
+button {
+  width: 60%;
+  border: 2px solid white;
+  display: block;
+  margin: 0 auto;
+  border-radius: 20px;
+}
+button:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+  
+}
+.message {
+  margin: 0 auto;
+  font-family: "Permanent Marker", cursive;
+  font-weight: 400;
+  font-style: normal;
+  color: white;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+#square-2,
+#square-5,
+#square-8 {
+  border-right: none;
+  
+}
+#square-0,
+#square-3,
+#square-6 {
+  border-left: none;
+}
+#square-0,
+#square-1,
+#square-2 {
+  border-top: none;
+}
+#square-6,
+#square-7,
+#square-8 {
+  border-bottom: none;
+}
+.square:hover {
+  opacity: 0.5;
+  transform: scale(1.1);
 }
